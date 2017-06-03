@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>饿了么LBS移动O2O</title>
+		<style>
+			body
+			{
+				background: url(img/bg.png);
+			}
+			#logo
+			{
+				width: 800px;
+				height: 40px;
+				margin: 50px auto 0;
+				text-align: right;
+				line-height: 40px;
+				color: #fff;
+			}
+			div
+			{
+				width: 500px;
+			}
+			#logo a
+			{
+				float: left;
+			}
+			#map
+			{
+				position: relative;
+				width: 800px;
+				height: 450px;
+				background: red;
+				margin: 30px auto 0;
+				position: relative;
+			}
+			#map .title
+			{
+				height: 50px;
+				width: 100%;
+				background: orange;
+				text-align: center;
+                line-height: 50px;
+                font-size: 20px;
+                color: #fff;  
+			}
+			#map .c-map
+			{
+				height: 400px;
+				width: 100%;
+				background: green;
+			}
+			#map .research
+			{
+				height: 50px;
+				width: 410px;
+				position: absolute;
+				left: 0;
+				right: 0;
+				top: 71px;
+				margin: 0 auto;
+			}
+			#map .research .c-text
+			{
+				height: 50px;
+				width: 360px;
+				outline: none;
+				float: left;
+				border: none;
+			}
+			#map .research .c-button
+			{
+				height: 52px;
+				width: 45px;
+				outline: none;
+				background: white;
+				border: none;
+				float: left;
+			}
+		</style>
+	</head> 
+	<body>
+		<div id="logo" class="box">
+			<a href="https://www.baidu.com/"><img src="img/logo.png" 
+	        style="height: 30px; width: 303px;" alt="注释说明"></a>LBS移动点餐系统
+		</div>
+		<div id="map">
+			<div class="title">点外卖，上饿了么！</div>
+			<div class="c-map" id="c-map"></div>
+			<div class="research">
+				<input type="text" placeholder="请输入地址..." class="c-text" id="c-text" />
+				<input type="button" value="搜索" class="c-button" />
+			</div>
+	    </div>
+		<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=1a47068f619a452c43f082860d1d99bd&plugin=AMap.Autocomplete,AMap.PlaceSearch"></script>
+		<script>//调用高德API实现地图效果并实现搜索功能
+			var map = new AMap.Map('c-map', 
+			{
+	        resizeEnable: true,
+	        zoom:11,
+	        center: [123.35194, 41.780819]	        
+	        });
+	         //输入提示
+		    var autoOptions = {
+		        input: "c-text"
+		    };
+		    var auto = new AMap.Autocomplete(autoOptions);
+		    var placeSearch = new AMap.PlaceSearch({
+		        map: map
+		    });  //构造地点查询类
+		    AMap.event.addListener(auto, "select", select);//注册监听，当选中某条记录时会触发
+		    function select(e) {
+		        placeSearch.setCity(e.poi.adcode);
+		        placeSearch.search(e.poi.name);  //关键字查询查询
+		    }
+		</script>
+	</body>
+</html>
